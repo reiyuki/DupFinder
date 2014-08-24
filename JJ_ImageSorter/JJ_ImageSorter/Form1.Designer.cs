@@ -29,11 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
             this.btnAddPath = new System.Windows.Forms.Button();
-            this.lvSelectedPaths = new System.Windows.Forms.ListView();
+            this.lstSearchPaths = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.txtStatusBar = new System.Windows.Forms.TextBox();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.btnDeletePath = new System.Windows.Forms.Button();
@@ -55,24 +54,27 @@
             this.btnAddPath.UseVisualStyleBackColor = true;
             this.btnAddPath.Click += new System.EventHandler(this.btnAddPath_Click);
             // 
-            // lvSelectedPaths
+            // lstSearchPaths
             // 
-            this.lvSelectedPaths.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2});
-            this.lvSelectedPaths.FullRowSelect = true;
-            this.lvSelectedPaths.GridLines = true;
-            listViewGroup2.Header = "ListViewGroup";
-            listViewGroup2.Name = "listViewGroup1";
-            this.lvSelectedPaths.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup2});
-            this.lvSelectedPaths.Location = new System.Drawing.Point(12, 35);
-            this.lvSelectedPaths.MultiSelect = false;
-            this.lvSelectedPaths.Name = "lvSelectedPaths";
-            this.lvSelectedPaths.Size = new System.Drawing.Size(446, 57);
-            this.lvSelectedPaths.TabIndex = 2;
-            this.lvSelectedPaths.UseCompatibleStateImageBehavior = false;
-            this.lvSelectedPaths.View = System.Windows.Forms.View.List;
+            this.lstSearchPaths.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1});
+            this.lstSearchPaths.FullRowSelect = true;
+            this.lstSearchPaths.GridLines = true;
+            listViewGroup3.Header = "ListViewGroup";
+            listViewGroup3.Name = "listViewGroup1";
+            this.lstSearchPaths.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
+            listViewGroup3});
+            this.lstSearchPaths.Location = new System.Drawing.Point(12, 35);
+            this.lstSearchPaths.MultiSelect = false;
+            this.lstSearchPaths.Name = "lstSearchPaths";
+            this.lstSearchPaths.Size = new System.Drawing.Size(446, 57);
+            this.lstSearchPaths.TabIndex = 2;
+            this.lstSearchPaths.UseCompatibleStateImageBehavior = false;
+            this.lstSearchPaths.View = System.Windows.Forms.View.List;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Width = 6000;
             // 
             // txtStatusBar
             // 
@@ -85,7 +87,7 @@
             // treeView1
             // 
             this.treeView1.CheckBoxes = true;
-            this.treeView1.Location = new System.Drawing.Point(12, 128);
+            this.treeView1.Location = new System.Drawing.Point(388, 128);
             this.treeView1.Name = "treeView1";
             this.treeView1.Size = new System.Drawing.Size(446, 174);
             this.treeView1.TabIndex = 4;
@@ -151,7 +153,7 @@
             this.Controls.Add(this.btnDeletePath);
             this.Controls.Add(this.treeView1);
             this.Controls.Add(this.txtStatusBar);
-            this.Controls.Add(this.lvSelectedPaths);
+            this.Controls.Add(this.lstSearchPaths);
             this.Controls.Add(this.btnAddPath);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -164,9 +166,8 @@
         #endregion
 
         private System.Windows.Forms.Button btnAddPath;
-        private System.Windows.Forms.ListView lvSelectedPaths;
+        private System.Windows.Forms.ListView lstSearchPaths;
         private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.TextBox txtStatusBar;
         private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.Button btnDeletePath;

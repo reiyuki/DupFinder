@@ -30,8 +30,8 @@
         {
             this.lstItemsToDelete = new System.Windows.Forms.ListBox();
             this.btnOK = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.lblDeleteStatus = new System.Windows.Forms.Label();
+            this.progressBarDeleteStatus = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // lstItemsToDelete
@@ -52,21 +52,21 @@
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             // 
-            // label1
+            // lblDeleteStatus
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(38, 87);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(105, 13);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "Deleted (x) of (y) files";
+            this.lblDeleteStatus.AutoSize = true;
+            this.lblDeleteStatus.Location = new System.Drawing.Point(31, 87);
+            this.lblDeleteStatus.Name = "lblDeleteStatus";
+            this.lblDeleteStatus.Size = new System.Drawing.Size(105, 13);
+            this.lblDeleteStatus.TabIndex = 5;
+            this.lblDeleteStatus.Text = "Deleted (x) of (y) files";
             // 
-            // progressBar1
+            // progressBarDeleteStatus
             // 
-            this.progressBar1.Location = new System.Drawing.Point(12, 103);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(144, 21);
-            this.progressBar1.TabIndex = 4;
+            this.progressBarDeleteStatus.Location = new System.Drawing.Point(12, 103);
+            this.progressBarDeleteStatus.Name = "progressBarDeleteStatus";
+            this.progressBarDeleteStatus.Size = new System.Drawing.Size(144, 21);
+            this.progressBarDeleteStatus.TabIndex = 4;
             // 
             // Popup_DeleteFiles
             // 
@@ -77,8 +77,8 @@
             this.ControlBox = false;
             this.Controls.Add(this.lstItemsToDelete);
             this.Controls.Add(this.btnOK);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.lblDeleteStatus);
+            this.Controls.Add(this.progressBarDeleteStatus);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -96,7 +96,7 @@
 
         private System.Windows.Forms.ListBox lstItemsToDelete;
         private System.Windows.Forms.Button btnOK;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Label lblDeleteStatus;
+        private System.Windows.Forms.ProgressBar progressBarDeleteStatus;
     }
 }

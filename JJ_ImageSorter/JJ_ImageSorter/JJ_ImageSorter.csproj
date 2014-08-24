@@ -32,6 +32,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ObjectListView">
+      <HintPath>..\Libraries\ObjectListView.dll</HintPath>
+    </Reference>
+    <Reference Include="SparkleLibrary">
+      <HintPath>..\Libraries\SparkleLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -70,12 +76,6 @@
     <Compile Include="Popup_DeleteFiles.Designer.cs">
       <DependentUpon>Popup_DeleteFiles.cs</DependentUpon>
     </Compile>
-    <Compile Include="oldPopup_DeleteFiles.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="oldPopup_DeleteFiles.Designer.cs">
-      <DependentUpon>oldPopup_DeleteFiles.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SmartFile.cs" />
@@ -87,9 +87,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="HotPathButton.resx">
       <DependentUpon>HotPathButton.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="oldPopup_DeleteFiles.resx">
-      <DependentUpon>oldPopup_DeleteFiles.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Popup_DeleteFiles.resx">
       <DependentUpon>Popup_DeleteFiles.cs</DependentUpon>

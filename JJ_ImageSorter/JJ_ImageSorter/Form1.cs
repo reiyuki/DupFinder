@@ -21,6 +21,9 @@ namespace JJ_ImageSorter
              dup.StatusChanged += dupStatusChanged;
              dup.DuplicateFileFound += DuplicateFileFound;
             //textBox1.DataBindings.Add("Text", dup, "CurrentStatus", false, DataSourceUpdateMode.OnPropertyChanged);
+
+            
+
         }
 
         private void dupStatusChanged(object sender, EventArgs e)
@@ -34,11 +37,19 @@ namespace JJ_ImageSorter
             dup.searchPaths.Add("C:\\Temp\\test");
             //dup.searchPaths.Add("C:\\inc\\0814");
 
-
+            PopulatePaths();
         }
 
+        public void PopulatePaths()
+        {
+            lstSearchPaths.Clear();
+            foreach (string pathName in dup.searchPaths)
+            {
+                lstSearchPaths.Items.Add(pathName);
+            }
+        }
 
-        private void BuildDupList()
+        private void PopulateDupList()
         {
             //Clear treeview
             treeView1.Nodes.Clear();
@@ -46,12 +57,12 @@ namespace JJ_ImageSorter
             //Each set of duplicates
             for (int curPos = 0; curPos <= dup.duplicates.Count - 1; curPos++)
             {
-                //get curDupe
+                //get curDupe  (0)
                 List<SmartFile> curDupe = dup.duplicates.ElementAt(curPos).Value;
 
                 treeView1.Nodes.Add(curDupe[0].fullFileName);
 
-                //add children
+                //add children  (1 to x)
                 for (int childNodeIndex = 1; childNodeIndex <= curDupe.Count - 1; childNodeIndex++)
                 {
                     treeView1.Nodes[treeView1.Nodes.Count - 1].Nodes.Add(curDupe[childNodeIndex].fullFileName);
@@ -76,7 +87,7 @@ namespace JJ_ImageSorter
         {
             dup.StartSearch();
             this.Text = dup.Status;
-            BuildDupList();
+            PopulateDupList();
         }
 
 
@@ -112,7 +123,20 @@ namespace JJ_ImageSorter
 
         private void btnDeletePath_Click(object sender, EventArgs e)
         {
-            Popup_DeleteFiles p = new Popup_DeleteFiles();
+            //Get a list of all checked files
+            List<SmartFile> sf = new List<SmartFile>();
+            for (int x = 0; x < treeView1.Nodes.Count; x++)
+            {
+                if (treeView1.Nodes[x].Checked == true)
+                {
+                    //sf.Add(dup.duplicates.ElementAt(x)
+
+                    //sf.Add((SmartFile)treeView1.Nodes[x].Nodes[0]);
+                }
+
+            }
+
+            Popup_DeleteFiles p = new Popup_DeleteFiles(sf.ToArray());
 
             //I can haz centerpointed?
             p.Owner = this;
