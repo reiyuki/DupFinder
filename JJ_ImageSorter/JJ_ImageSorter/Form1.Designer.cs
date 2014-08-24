@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
             this.btnAddPath = new System.Windows.Forms.Button();
             this.lstSearchPaths = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -41,6 +41,7 @@
             this.toolStripExpandAllItems = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripUnexpandAllItems = new System.Windows.Forms.ToolStripMenuItem();
             this.cmdDeleteCheckedFiles = new System.Windows.Forms.Button();
+            this.dlgAddFolder = new System.Windows.Forms.FolderBrowserDialog();
             this.context_ExpandItems.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,10 +61,10 @@
             this.columnHeader1});
             this.lstSearchPaths.FullRowSelect = true;
             this.lstSearchPaths.GridLines = true;
-            listViewGroup3.Header = "ListViewGroup";
-            listViewGroup3.Name = "listViewGroup1";
+            listViewGroup1.Header = "ListViewGroup";
+            listViewGroup1.Name = "listViewGroup1";
             this.lstSearchPaths.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup3});
+            listViewGroup1});
             this.lstSearchPaths.Location = new System.Drawing.Point(12, 35);
             this.lstSearchPaths.MultiSelect = false;
             this.lstSearchPaths.Name = "lstSearchPaths";
@@ -87,7 +88,7 @@
             // treeView1
             // 
             this.treeView1.CheckBoxes = true;
-            this.treeView1.Location = new System.Drawing.Point(388, 128);
+            this.treeView1.Location = new System.Drawing.Point(12, 128);
             this.treeView1.Name = "treeView1";
             this.treeView1.Size = new System.Drawing.Size(446, 174);
             this.treeView1.TabIndex = 4;
@@ -142,6 +143,7 @@
             this.cmdDeleteCheckedFiles.TabIndex = 7;
             this.cmdDeleteCheckedFiles.Text = "Delete Checked Files";
             this.cmdDeleteCheckedFiles.UseVisualStyleBackColor = true;
+            this.cmdDeleteCheckedFiles.Click += new System.EventHandler(this.cmdDeleteCheckedFiles_Click);
             // 
             // Form1
             // 
@@ -176,6 +178,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripExpandAllItems;
         private System.Windows.Forms.ToolStripMenuItem toolStripUnexpandAllItems;
         private System.Windows.Forms.Button cmdDeleteCheckedFiles;
+        private System.Windows.Forms.FolderBrowserDialog dlgAddFolder;
 
     }
 }

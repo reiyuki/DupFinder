@@ -12,7 +12,7 @@ namespace JJ_ImageSorter
 {
     public partial class Popup_DeleteFiles : Form
     {
-        SmartFile[] filesToDelete;
+        List<SmartFile> filesToDelete;
 
 
         private bool _isDeleting;
@@ -39,9 +39,10 @@ namespace JJ_ImageSorter
         }
 
 
-        public Popup_DeleteFiles(SmartFile[] files)
+        public Popup_DeleteFiles(List<SmartFile> files)
         {
             InitializeComponent();
+            filesToDelete = files;
         }
 
         public Popup_DeleteFiles(string[] files)
@@ -75,9 +76,9 @@ namespace JJ_ImageSorter
         {
             isDeleting = true;
             int filesDeleted = 0;
-            int totalFilesToDelete = filesToDelete.Length;
+            int totalFilesToDelete = filesToDelete.Count;
 
-            for (int x = 0; x < filesToDelete.Length; x++)
+            for (int x = 0; x < filesToDelete.Count; x++)
             {
                 System.Diagnostics.Debug.WriteLine("DELETEING:" + filesToDelete[x].fullFileName);
                 //Application.DoEvents();
@@ -87,6 +88,7 @@ namespace JJ_ImageSorter
 
             isDeleting = false;
             this.Text = "Delete Complete";
+            UpdateDeleteProgress(totalFilesToDelete, totalFilesToDelete);
             //Deleted x of y files
         }
 

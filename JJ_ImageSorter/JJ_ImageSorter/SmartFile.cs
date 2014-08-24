@@ -24,6 +24,10 @@ using System.IO;
             }
         }
 
+        public int tagRank { get;set;}
+
+
+
         //Public Properties
         public string fileName
         {

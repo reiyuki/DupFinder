@@ -22,7 +22,7 @@ namespace JJ_ImageSorter
              dup.DuplicateFileFound += DuplicateFileFound;
             //textBox1.DataBindings.Add("Text", dup, "CurrentStatus", false, DataSourceUpdateMode.OnPropertyChanged);
 
-            
+             //objListView.SetObjects(
 
         }
 
@@ -34,8 +34,15 @@ namespace JJ_ImageSorter
         private void btnAddPath_Click(object sender, EventArgs e)
         {
             //C:\Img
-            dup.searchPaths.Add("C:\\Temp\\test");
+            //dup.searchPaths.Add("C:\\Temp\\test");
             //dup.searchPaths.Add("C:\\inc\\0814");
+
+            DialogResult d = dlgAddFolder.ShowDialog();
+            if (d == DialogResult.OK)
+            {
+                dup.searchPaths.Add(dlgAddFolder.SelectedPath);
+            }
+
 
             PopulatePaths();
         }
@@ -49,8 +56,12 @@ namespace JJ_ImageSorter
             }
         }
 
+
+
+
         private void PopulateDupList()
         {
+
             //Clear treeview
             treeView1.Nodes.Clear();
 
@@ -60,24 +71,34 @@ namespace JJ_ImageSorter
                 //get curDupe  (0)
                 List<SmartFile> curDupe = dup.duplicates.ElementAt(curPos).Value;
 
-                treeView1.Nodes.Add(curDupe[0].fullFileName);
+                TreeNode newNode = new TreeNode(curDupe[0].fullFileName + "      (" + curDupe[0].tagRank  + ")");
+                newNode.Tag = curDupe[0];
+                treeView1.Nodes.Add(newNode);
 
                 //add children  (1 to x)
                 for (int childNodeIndex = 1; childNodeIndex <= curDupe.Count - 1; childNodeIndex++)
                 {
-                    treeView1.Nodes[treeView1.Nodes.Count - 1].Nodes.Add(curDupe[childNodeIndex].fullFileName);
+
+                    TreeNode newChildNode = new TreeNode(curDupe[childNodeIndex].fullFileName + "      (" + curDupe[childNodeIndex].tagRank  + ")");
+                    newChildNode.Tag = curDupe[childNodeIndex];
+
+                    newNode.Nodes.Add(newChildNode);
 
                 }
 
             }
+
+            //Test do stuff
+            TreeNode n = new TreeNode();
+            n.Tag = dup.duplicates.ElementAt(0).Value[0]; // no way!!
+
+
         }
 
         private void DuplicateFileFound(DupFileEvent d)
         {
             //Check to see if hash exists
             System.Diagnostics.Debug.WriteLine(d.smartFile.fullFileName);
-
-
         }
 
 
@@ -123,28 +144,46 @@ namespace JJ_ImageSorter
 
         private void btnDeletePath_Click(object sender, EventArgs e)
         {
+            dup.searchPaths.Remove(lstSearchPaths.SelectedItems[0].Text);
+            PopulatePaths();
+        }
+
+        private void cmdDeleteCheckedFiles_Click(object sender, EventArgs e)
+        {
+            //
             //Get a list of all checked files
             List<SmartFile> sf = new List<SmartFile>();
             for (int x = 0; x < treeView1.Nodes.Count; x++)
             {
                 if (treeView1.Nodes[x].Checked == true)
                 {
+                    SmartFile tmpFile = (SmartFile)treeView1.Nodes[x].Tag;
+                    sf.Add(tmpFile);
                     //sf.Add(dup.duplicates.ElementAt(x)
 
                     //sf.Add((SmartFile)treeView1.Nodes[x].Nodes[0]);
                 }
-
+                //Check children
+                foreach (TreeNode n in treeView1.Nodes[x].Nodes)
+                {
+                    if (n.Checked)
+                    {
+                        SmartFile tmpSubFile = (SmartFile)n.Tag;
+                        sf.Add(tmpSubFile);
+                    }
+                }
             }
 
-            Popup_DeleteFiles p = new Popup_DeleteFiles(sf.ToArray());
+            Popup_DeleteFiles p = new Popup_DeleteFiles(sf);
 
             //I can haz centerpointed?
             p.Owner = this;
             p.StartPosition = FormStartPosition.CenterParent;
-            
+
 
             p.ShowDialog();
             //p.ShowDialogPrompt();
+
 
         }
     }

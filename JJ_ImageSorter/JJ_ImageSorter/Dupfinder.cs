@@ -29,6 +29,23 @@ using System.Diagnostics;
         public event DupFileHandler DuplicateFileFound = delegate { };
 
 
+        private List<SmartFile> GetAllFilesInfolders(string[] searchPaths)
+        {
+            List<SmartFile> sfl = new List<SmartFile>();
+
+            foreach (string curPath in searchPaths)
+            {
+                string[] filenames = Directory.GetFiles(curPath, "*", SearchOption.AllDirectories);
+
+                foreach (string curFile in filenames)
+                {
+                    SmartFile newSmartFile = new SmartFile(curFile);
+                    sfl.Add(newSmartFile);
+                }
+            }
+            return sfl;
+        }
+
 
 
     //    SmartFile s = new SmartFile(
@@ -37,14 +54,10 @@ using System.Diagnostics;
             isSearching = true;
             Status = "Searching"; StatusChanged(this,new EventArgs());
             //Recursively search and add files to temporary list sfl  (smartfilelist)
-            string[] filenames = Directory.GetFiles(searchPaths[0], "*", SearchOption.AllDirectories);
-            List<SmartFile> sfl = new List<SmartFile>();
-            foreach (string s in filenames)
-            {
-                SmartFile newSmartFile = new SmartFile(s);
-                sfl.Add(newSmartFile);
-                
-            }
+            
+
+            List<SmartFile> sfl = GetAllFilesInfolders(searchPaths.ToArray());
+
 
 
             //Start filling smartFiles dictionary by 64bit hashcode.  On collision, add to duplicates

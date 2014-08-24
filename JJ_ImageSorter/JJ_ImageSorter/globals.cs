@@ -79,6 +79,9 @@ using System.Collections;
 
 
 
+
+
+
     public class DupFileEvent : EventArgs
     {
         public SmartFile smartFile { get; private set; }
@@ -96,7 +99,8 @@ using System.Collections;
 
 
 
-
+    //public enum TagType
+//    { 
 
 
 

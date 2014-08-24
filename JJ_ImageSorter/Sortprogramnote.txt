@@ -1,0 +1,14 @@
+Right-click menu for each item:
+
+
+	Tag this file (+ or -)
+	Tag wildcard name ( autofills in name )
+	Tag all in this folder
+	-----
+	Cut all files in this folder
+	Paste to this folder
+
+
+
+
+
