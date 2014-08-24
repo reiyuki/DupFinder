@@ -14,6 +14,7 @@ using System.IO;
         private bool _isValidFile;
         private FileInfo _fileInfo;
 
+        public List<Tag> tags;  //Tags are used to upvote/downvote a file
 
         public string value
         {
@@ -99,6 +100,7 @@ using System.IO;
 
             _isValidFile = true;
             _fileInfo = myFileInfo;
+            tags = new List<Tag>();
         }
         public SmartFile(FileInfo myFileInfo)
         {
@@ -109,6 +111,7 @@ using System.IO;
 
             _isValidFile = true;
             _fileInfo = myFileInfo;
+            tags = new List<Tag>();
         }
 
 
@@ -144,7 +147,6 @@ using System.IO;
             }
             else
             {
-                
                 return false;
             }
         }

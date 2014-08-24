@@ -9,15 +9,33 @@ using System.Diagnostics;
 
     public class Dupfinder
     {
+        //Paths to list in our search
         public List<string> searchPaths;
 
-        public Dictionary<UInt64, SmartFile> smartFiles;
+        private Dictionary<UInt64, SmartFile> smartFiles;
 
         public Dictionary<UInt64, List<SmartFile>> duplicates;
+
+
+
+        public bool isSearching { get; private set; }
+        public string Status { get; private set; }
+
+        public event EventHandler StatusChanged;
+
+
+
+        public delegate void DupFileHandler(DupFileEvent d);
+        public event DupFileHandler DuplicateFileFound = delegate { };
+
+
+
 
     //    SmartFile s = new SmartFile(
         public void StartSearch()
         {
+            isSearching = true;
+            Status = "Searching"; StatusChanged(this,new EventArgs());
             //Recursively search and add files to temporary list sfl  (smartfilelist)
             string[] filenames = Directory.GetFiles(searchPaths[0], "*", SearchOption.AllDirectories);
             List<SmartFile> sfl = new List<SmartFile>();
@@ -25,11 +43,12 @@ using System.Diagnostics;
             {
                 SmartFile newSmartFile = new SmartFile(s);
                 sfl.Add(newSmartFile);
+                
             }
 
 
             //Start filling smartFiles dictionary by 64bit hashcode.  On collision, add to duplicates
-
+            Status = "Hashing";
             for (int i = 0; i <= sfl.Count - 1; i++)
             {
                 if (smartFiles.ContainsKey(sfl[i].hash64))
@@ -42,10 +61,17 @@ using System.Diagnostics;
                         //Initialize our list if it dosen't exist yet, and add the other first hash
                         duplicates[sfl[i].hash64] = new List<SmartFile>();
                         duplicates[sfl[i].hash64].Add(smartFiles[sfl[i].hash64]);
+                        
+                        //Raise an event
+                        DuplicateFileFound(new DupFileEvent(smartFiles[sfl[i].hash64]));
+                        
+
                     }
                         //Add this file to duplicate list
                         duplicates[sfl[i].hash64].Add(sfl[i]);
 
+                        //Raise an event
+                        DuplicateFileFound(new DupFileEvent(sfl[i]));
 
                 }
                 else
@@ -54,38 +80,28 @@ using System.Diagnostics;
                     smartFiles.Add(sfl[i].hash64,sfl[i]);
                 }
             }
-  //          foreach (SmartFile sf in smartFiles.ToArray())
-//            {
-                //Debug.WriteLine(sf.hashString + "," + sf.fileName );
 
-                //Reorder list
-            Debug.WriteLine("test");
-
-//list.OrderBy(b => BitConverter.ToInt64(b, 0))
-
-        }
-
-        private void DupFound()
-        {
+            //Finish events
+            Status = "Done"; isSearching = false; StatusChanged(this, new EventArgs());
+            
         }
 
 
+        //Constructor
         public Dupfinder()
         {
-            
+            //Init all the dictionaries and lists
             searchPaths = new List<string>();
-
             smartFiles = new Dictionary<UInt64,SmartFile>();
-
             duplicates = new Dictionary<ulong,List<SmartFile>>();
-            //smartFiles = new List<SmartFile>();
-            //smartFiles.OrderBy(b => BitConverter.ToInt64(b.hash,0));
-            //smartFiles.
-            
+
+            Status = "Initialized";
         }
 
 
     }
+
+
 
 
 
