@@ -35,7 +35,6 @@ namespace JJ_ImageSorter
         {
             //C:\Img
             //dup.searchPaths.Add("C:\\Temp\\test");
-            //dup.searchPaths.Add("C:\\inc\\0814");
 
             DialogResult d = dlgAddFolder.ShowDialog();
             if (d == DialogResult.OK)
