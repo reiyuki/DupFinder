@@ -7,117 +7,151 @@ using System.Collections;
 using System.IO;
 using System.Diagnostics;
 
-    public class Dupfinder
+public class DupFinder
+{
+	//List of all files, keyed by filesize
+	private Dictionary<long,List<SmartFile>> fileSizeList;
+
+	//List of all duplicates, hash as key
+	private Dictionary<ulong,List<SmartFile>> duplicateFiles;
+    public Dictionary<ulong, List<SmartFile>> DuplicateFiles
     {
-        //Paths to list in our search
-        public List<string> searchPaths;
-
-        private Dictionary<UInt64, SmartFile> smartFiles;
-
-        public Dictionary<UInt64, List<SmartFile>> duplicates;
-
-
-
-        public bool isSearching { get; private set; }
-        public string Status { get; private set; }
-
-        public event EventHandler StatusChanged;
-
-
-
-        public delegate void DupFileHandler(DupFileEvent d);
-        public event DupFileHandler DuplicateFileFound = delegate { };
-
-
-        private List<SmartFile> GetAllFilesInfolders(string[] searchPaths)
+        get
         {
-            List<SmartFile> sfl = new List<SmartFile>();
-
-            foreach (string curPath in searchPaths)
-            {
-                string[] filenames = Directory.GetFiles(curPath, "*", SearchOption.AllDirectories);
-
-                foreach (string curFile in filenames)
-                {
-                    SmartFile newSmartFile = new SmartFile(curFile);
-                    sfl.Add(newSmartFile);
-                }
-            }
-            return sfl;
+            return duplicateFiles;
         }
-
-
-
-    //    SmartFile s = new SmartFile(
-        public void StartSearch()
-        {
-            isSearching = true;
-            Status = "Searching"; StatusChanged(this,new EventArgs());
-            //Recursively search and add files to temporary list sfl  (smartfilelist)
-            
-
-            List<SmartFile> sfl = GetAllFilesInfolders(searchPaths.ToArray());
-
-
-
-            //Start filling smartFiles dictionary by 64bit hashcode.  On collision, add to duplicates
-            Status = "Hashing";
-            for (int i = 0; i <= sfl.Count - 1; i++)
-            {
-                if (smartFiles.ContainsKey(sfl[i].hash64))
-                {
-                    //Dupe found !
-                    Debug.WriteLine("DUP FOUND:" + sfl[i].fileName);
-
-                    if (duplicates.ContainsKey(sfl[i].hash64) == false)
-                    {
-                        //Initialize our list if it dosen't exist yet, and add the other first hash
-                        duplicates[sfl[i].hash64] = new List<SmartFile>();
-                        duplicates[sfl[i].hash64].Add(smartFiles[sfl[i].hash64]);
-                        
-                        //Raise an event
-                        DuplicateFileFound(new DupFileEvent(smartFiles[sfl[i].hash64]));
-                        
-
-                    }
-                        //Add this file to duplicate list
-                        duplicates[sfl[i].hash64].Add(sfl[i]);
-
-                        //Raise an event
-                        DuplicateFileFound(new DupFileEvent(sfl[i]));
-
-                }
-                else
-                {
-                    //No dup found
-                    smartFiles.Add(sfl[i].hash64,sfl[i]);
-                }
-            }
-
-            //Finish events
-            Status = "Done"; isSearching = false; StatusChanged(this, new EventArgs());
-            
-        }
-
-
-        //Constructor
-        public Dupfinder()
-        {
-            //Init all the dictionaries and lists
-            searchPaths = new List<string>();
-            smartFiles = new Dictionary<UInt64,SmartFile>();
-            duplicates = new Dictionary<ulong,List<SmartFile>>();
-
-            Status = "Initialized";
-        }
-
-
     }
 
+    //pathsToSearch   (no \ at the end)
+	private List<string> pathsToSearch;	
+	public void AddSearchPath(string newSearchPath)
+	{
+        //Remove any trailing \'es
+        if (newSearchPath.EndsWith("\\")) { newSearchPath = newSearchPath.TrimEnd("\\".ToCharArray()); }
+
+		pathsToSearch.Add(newSearchPath);
+	}
+	public void DelSearchPath(string oldSearchPath)
+	{
+        //Remove any trailing \'es
+        if (oldSearchPath.EndsWith("\\")) { oldSearchPath = oldSearchPath.TrimEnd("\\".ToCharArray()); }
+
+		pathsToSearch.Remove(oldSearchPath);
+	}	
+	public List<string> GetSearchPaths()
+	{
+		return pathsToSearch;
+	}
+	
+
+
+	// Iterate through 
+	public void StartSearch()
+	{
+		//Initialize master list of files (organized by filesize)
+		fileSizeList = new Dictionary<long,List<SmartFile>>();
+		
+		//Discover files in each path (adds to master list fileSizeList)
+		foreach (string curSearchPath in pathsToSearch)
+		{
+			DiscoverFiles(curSearchPath);
+		}
+
+		
+        //Run through list to find actual duplicates
+        for ( int i = 0; i < fileSizeList.Count; i++)
+        {
+
+            CompareHashesAndAddDuplicates(fileSizeList.ElementAt(i).Value);
+        }
+
+	}
+	
+	//Discover files and add to fileSizeList dictionary.   THREAD BLOCKING
+	private void DiscoverFiles(string pathName)
+	{
+		// FileInfo and parsing etc
+
+        string[] filenames = Directory.GetFiles(pathName, "*", SearchOption.AllDirectories);
+        foreach (string curFile in filenames)
+        {
+            SmartFile newSmartFile = new SmartFile(curFile);
+
+            //Add the list if it dosen't exist already
+            if (!fileSizeList.ContainsKey(newSmartFile.FileSize))
+            {
+                fileSizeList.Add(newSmartFile.FileSize,new List<SmartFile>());
+            }
+
+
+            fileSizeList[newSmartFile.FileSize].Add(newSmartFile);
+
+        }
+
+	}
+
+	
+	//Check a list of files and auto-add to 'Duplicates' whatever is found to be duplicate 
+    private void CompareHashesAndAddDuplicates(List<SmartFile> fileList)
+    {
+        //Only check hashes on files with duplicate sizes
+        if (fileList.Count == 1)
+        {
+            return;
+        }
+
+        //create temp dictionary like before
+        Dictionary<ulong, SmartFile> tmpHashLookup = new Dictionary<ulong, SmartFile>();
+
+        //
+        foreach (SmartFile curFile in fileList)
+        {
+            if (tmpHashLookup.ContainsKey(curFile.hash64))
+            {
+                //
+                TryAddDuplicate(tmpHashLookup[curFile.hash64]); //try add hashtable item
+                TryAddDuplicate(curFile);
+            }
+            else
+            {
+                tmpHashLookup.Add(curFile.hash64, curFile);
+            }
+        }
+    }
+
+		//Attempt to add a file to our master 'duplicates' list.
+		private void TryAddDuplicate(SmartFile newFile)
+		{
+			List<SmartFile> dupeList;
+		
+			//If hash exists open dictionary, if not create a new entry
+			if (duplicateFiles.ContainsKey(newFile.hash64))
+			{
+				dupeList = duplicateFiles[newFile.hash64];
+			}
+			else
+			{
+				dupeList = new List<SmartFile>();  //create new list
+				duplicateFiles.Add(newFile.hash64,dupeList); //add list to master dupe dictionary
+			}
+
+			//Add the duplicate file if it doesn't already exist
+			if (!dupeList.Contains(newFile))
+			{
+				dupeList.Add(newFile);
+			}
+			
+		}
 
 
 
-
-
-    
-
+        public DupFinder()
+        {
+            fileSizeList = new Dictionary<long, List<SmartFile>>();
+            duplicateFiles = new Dictionary<ulong, List<SmartFile>>();
+            pathsToSearch = new List<string>();
+        }
+	
+	
+	
+	}

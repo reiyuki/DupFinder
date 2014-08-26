@@ -7,39 +7,41 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using JJ_ImageSorter;
 
 namespace JJ_ImageSorter
 {
     public partial class Form1 : Form
     {
-        public Dupfinder dup;
+        public DupFinder dup;
 
         public Form1()
         {
             InitializeComponent();
-            dup = new Dupfinder();
-             dup.StatusChanged += dupStatusChanged;
-             dup.DuplicateFileFound += DuplicateFileFound;
+            dup = new DupFinder();
+             //dup.StatusChanged += dupStatusChanged;
+             //dup.DuplicateFileFound += DuplicateFileFound;
             //textBox1.DataBindings.Add("Text", dup, "CurrentStatus", false, DataSourceUpdateMode.OnPropertyChanged);
-
-             //objListView.SetObjects(
 
         }
 
         private void dupStatusChanged(object sender, EventArgs e)
         {
-            txtStatusBar.Text = dup.Status;
+            //txtStatusBar.Text = dup.Status;
         }
 
         private void btnAddPath_Click(object sender, EventArgs e)
         {
             //C:\Img
-            //dup.searchPaths.Add("C:\\Temp\\test");
+            //dup.AddSearchPath("C:\\Temp\\test");
+            //PopulatePaths();
+            //return;
+
 
             DialogResult d = dlgAddFolder.ShowDialog();
             if (d == DialogResult.OK)
             {
-                dup.searchPaths.Add(dlgAddFolder.SelectedPath);
+                dup.AddSearchPath(dlgAddFolder.SelectedPath);
             }
 
 
@@ -49,7 +51,7 @@ namespace JJ_ImageSorter
         public void PopulatePaths()
         {
             lstSearchPaths.Clear();
-            foreach (string pathName in dup.searchPaths)
+            foreach (string pathName in dup.GetSearchPaths())
             {
                 lstSearchPaths.Items.Add(pathName);
             }
@@ -65,12 +67,12 @@ namespace JJ_ImageSorter
             treeView1.Nodes.Clear();
 
             //Each set of duplicates
-            for (int curPos = 0; curPos <= dup.duplicates.Count - 1; curPos++)
+            for (int curPos = 0; curPos <= dup.DuplicateFiles.Count - 1; curPos++)
             {
                 //get curDupe  (0)
-                List<SmartFile> curDupe = dup.duplicates.ElementAt(curPos).Value;
+                List<SmartFile> curDupe = dup.DuplicateFiles.ElementAt(curPos).Value;
 
-                TreeNode newNode = new TreeNode(curDupe[0].fullFileName + "      (" + curDupe[0].tagRank  + ")");
+                TreeNode newNode = new TreeNode(curDupe[0].fullFileName + "      (" + curDupe[0].TagRank  + ")");
                 newNode.Tag = curDupe[0];
                 treeView1.Nodes.Add(newNode);
 
@@ -78,7 +80,7 @@ namespace JJ_ImageSorter
                 for (int childNodeIndex = 1; childNodeIndex <= curDupe.Count - 1; childNodeIndex++)
                 {
 
-                    TreeNode newChildNode = new TreeNode(curDupe[childNodeIndex].fullFileName + "      (" + curDupe[childNodeIndex].tagRank  + ")");
+                    TreeNode newChildNode = new TreeNode(curDupe[childNodeIndex].fullFileName + "      (" + curDupe[childNodeIndex].TagRank  + ")");
                     newChildNode.Tag = curDupe[childNodeIndex];
 
                     newNode.Nodes.Add(newChildNode);
@@ -89,7 +91,7 @@ namespace JJ_ImageSorter
 
             //Test do stuff
             TreeNode n = new TreeNode();
-            n.Tag = dup.duplicates.ElementAt(0).Value[0]; // no way!!
+            n.Tag = dup.DuplicateFiles.ElementAt(0).Value[0]; // no way!!
 
 
         }
@@ -106,7 +108,7 @@ namespace JJ_ImageSorter
         private void btnStartSearch_Click(object sender, EventArgs e)
         {
             dup.StartSearch();
-            this.Text = dup.Status;
+            //this.Text = dup.Status;
             PopulateDupList();
         }
 
@@ -143,7 +145,7 @@ namespace JJ_ImageSorter
 
         private void btnDeletePath_Click(object sender, EventArgs e)
         {
-            dup.searchPaths.Remove(lstSearchPaths.SelectedItems[0].Text);
+            dup.DelSearchPath(lstSearchPaths.SelectedItems[0].Text);
             PopulatePaths();
         }
 

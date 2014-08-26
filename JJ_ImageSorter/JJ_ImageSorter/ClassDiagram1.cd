@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Dupfinder">
-    <Position X="3.75" Y="2" Width="1.5" />
+  <Class Name="Dupfinder" Collapsed="true">
+    <Position X="4.25" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Dupfinder.cs</FileName>
+      <HashCode>BQBAAAAEAAAAAAAAACAAAAAABEAAgAAAAAAAEAAAAAA=</HashCode>
+      <FileName>Dupfinder_old.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SmartFile" Collapsed="true">
-    <Position X="8" Y="2" Width="1.5" />
+    <Position X="6" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BQEAAAAAAAAAAAACAAAAAAAAAAgAAQBAAEAADABAAAA=</HashCode>
+      <HashCode>BQEAAAAAAAAAAABCAgAAAAAAAAgABSBAAMBADABAAIA=</HashCode>
       <FileName>SmartFile.cs</FileName>
     </TypeIdentifier>
   </Class>

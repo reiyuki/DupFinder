@@ -218,3 +218,5 @@ bin
 obj
 config
 
+*.exe
+*.exe

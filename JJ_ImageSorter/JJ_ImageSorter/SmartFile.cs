@@ -24,9 +24,15 @@ using System.IO;
             }
         }
 
-        public int tagRank { get;set;}
+        public int TagRank { get;set;}
 
-
+        public long FileSize
+        {
+            get
+            {
+                return _fileInfo.Length;
+            }
+        }
 
         //Public Properties
         public string fileName

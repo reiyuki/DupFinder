@@ -8,20 +8,19 @@ c:\users\reiyuki\documents\visual studio 2012\Projects\JJ_ImageSorter\JJ_ImageSo
 c:\users\reiyuki\documents\visual studio 2012\Projects\JJ_ImageSorter\JJ_ImageSorter\obj\Debug\JJ_ImageSorter.exe
 c:\users\reiyuki\documents\visual studio 2012\Projects\JJ_ImageSorter\JJ_ImageSorter\obj\Debug\JJ_ImageSorter.pdb
 c:\users\reiyuki\documents\visual studio 2012\Projects\JJ_ImageSorter\JJ_ImageSorter\obj\Debug\JJ_ImageSorter.AskToOverwrite.resources
-C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\JJ_ImageSorter\obj\Debug\JJ_ImageSorter.AskToOverwrite.resources
-C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\JJ_ImageSorter\obj\Debug\JJ_ImageSorter.Form1.resources
-C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\JJ_ImageSorter\obj\Debug\JJ_ImageSorter.HotPathButton.resources
-C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\JJ_ImageSorter\obj\Debug\JJ_ImageSorter.Properties.Resources.resources
-C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\JJ_ImageSorter\obj\Debug\JJ_ImageSorter.csproj.GenerateResource.Cache
 C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\JJ_ImageSorter\bin\Debug\JJ_ImageSorter.exe.config
 C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\JJ_ImageSorter\bin\Debug\JJ_ImageSorter.exe
 C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\JJ_ImageSorter\bin\Debug\JJ_ImageSorter.pdb
-C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\JJ_ImageSorter\obj\Debug\JJ_ImageSorter.exe
-C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\JJ_ImageSorter\obj\Debug\JJ_ImageSorter.pdb
-C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\JJ_ImageSorter\obj\Debug\JJ_ImageSorter.csprojResolveAssemblyReference.cache
-C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\JJ_ImageSorter\obj\Debug\JJ_ImageSorter.Popup_DeleteFiles.resources
 C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\JJ_ImageSorter\bin\Debug\ObjectListView.dll
+C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\JJ_ImageSorter\bin\Debug\SparkleLibrary.dll
 C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\JJ_ImageSorter\bin\Debug\ObjectListView.pdb
 C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\JJ_ImageSorter\bin\Debug\ObjectListView.xml
-C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\JJ_ImageSorter\bin\Debug\SparkleLibrary.dll
 C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\JJ_ImageSorter\bin\Debug\SparkleLibrary.pdb
+C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\JJ_ImageSorter\obj\Debug\JJ_ImageSorter.AskToOverwrite.resources
+C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\JJ_ImageSorter\obj\Debug\JJ_ImageSorter.Form1.resources
+C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\JJ_ImageSorter\obj\Debug\JJ_ImageSorter.HotPathButton.resources
+C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\JJ_ImageSorter\obj\Debug\JJ_ImageSorter.Popup_DeleteFiles.resources
+C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\JJ_ImageSorter\obj\Debug\JJ_ImageSorter.Properties.Resources.resources
+C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\JJ_ImageSorter\obj\Debug\JJ_ImageSorter.csproj.GenerateResource.Cache
+C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\JJ_ImageSorter\obj\Debug\JJ_ImageSorter.exe
+C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\JJ_ImageSorter\obj\Debug\JJ_ImageSorter.pdb
