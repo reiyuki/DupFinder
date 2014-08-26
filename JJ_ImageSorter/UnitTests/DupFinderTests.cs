@@ -13,7 +13,8 @@ namespace UnitTests
             
             DupFinder dup = new DupFinder();
 
-            dup.AddSearchPath("C:\\inc\\0614");
+            //dup.AddSearchPath("C:\\inc\\0614");
+            dup.AddSearchPath("I:\\LSort\\abubu");
             dup.StartSearch();
 
 
@@ -26,7 +27,8 @@ namespace UnitTests
         {
             Dupfinder_old dup = new Dupfinder_old();
 
-            dup.searchPaths.Add("C:\\inc\\0614");
+            //dup.searchPaths.Add("C:\\inc\\0614");
+            dup.searchPaths.Add("I:\\LSort\\abubu");
             dup.StartSearch();
 
         }

@@ -24,3 +24,4 @@ C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\JJ_ImageSorter\obj\De
 C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\JJ_ImageSorter\obj\Debug\JJ_ImageSorter.csproj.GenerateResource.Cache
 C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\JJ_ImageSorter\obj\Debug\JJ_ImageSorter.exe
 C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\JJ_ImageSorter\obj\Debug\JJ_ImageSorter.pdb
+C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\JJ_ImageSorter\obj\Debug\JJ_ImageSorter.csprojResolveAssemblyReference.cache
