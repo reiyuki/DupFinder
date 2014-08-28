@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Collections;
 using System.IO;
 using System.Diagnostics;
@@ -45,9 +46,29 @@ public class DupFinder
 	
 
 
+    //Events and Delegates
+    public event StateHandler StatusChanged;
+    public delegate void StateHandler(string state);
+    event FileInfoHandler DuplicateFileFound;
+    public delegate void FileInfoHandler(SmartFile smartFile);
+
+
+    //Thread Stuff
+    Thread workerThread;
+
+
+    //Same as below, but through a worker thread
+    public void StartSearch_Async()
+    {
+        workerThread = new Thread(new ThreadStart(this.StartSearch));
+        workerThread.Start();
+        StatusChanged("Started Search");
+    }
+
 	// Iterate through 
 	public void StartSearch()
 	{
+        this.StatusChanged("Hi there");
 		//Initialize master list of files (organized by filesize)
 		fileSizeList = new Dictionary<long,List<SmartFile>>();
 		

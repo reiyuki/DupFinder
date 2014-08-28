@@ -23,19 +23,19 @@ namespace JJ_ImageSorter
              //dup.DuplicateFileFound += DuplicateFileFound;
             //textBox1.DataBindings.Add("Text", dup, "CurrentStatus", false, DataSourceUpdateMode.OnPropertyChanged);
 
+            //dup.StatusChanged += dupStatusChanged;
         }
 
-        private void dupStatusChanged(object sender, EventArgs e)
+        private void dupStatusChanged(string message)
         {
-            //txtStatusBar.Text = dup.Status;
+            txtStatusBar.Text = message;
         }
 
         private void btnAddPath_Click(object sender, EventArgs e)
         {
-            //C:\Img
-            //dup.AddSearchPath("C:\\Temp\\test");
-            //PopulatePaths();
-            //return;
+            dup.AddSearchPath("C:\\Temp\\test");
+            PopulatePaths();
+            return;
 
 
             DialogResult d = dlgAddFolder.ShowDialog();
