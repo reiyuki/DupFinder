@@ -221,3 +221,6 @@ config
 *.exe
 *.exe
 *.exe
+*.dll
+JJ_ImageSorter/UnitTests/bin/Debug/JJ_ImageSorter.pdb
+JJ_ImageSorter/UnitTests/bin/Debug/UnitTests.dll
