@@ -62,13 +62,13 @@ public class DupFinder
     {
         workerThread = new Thread(new ThreadStart(this.StartSearch));
         workerThread.Start();
-        StatusChanged("Started Search");
+        OnStatusChanged("Started Search");
     }
 
 	// Iterate through 
 	public void StartSearch()
 	{
-        this.StatusChanged("Hi there");
+        OnStatusChanged("Hi there");
 		//Initialize master list of files (organized by filesize)
 		fileSizeList = new Dictionary<long,List<SmartFile>>();
 		
@@ -161,18 +161,33 @@ public class DupFinder
 			{
 				dupeList.Add(newFile);
 			}
-			
+		
+            //Autotag
+            AutoRank ar = new AutoRank();
+            ar.UpdateTags(newFile);
 		}
 
 
 
+        //Constructor
         public DupFinder()
         {
             fileSizeList = new Dictionary<long, List<SmartFile>>();
             duplicateFiles = new Dictionary<ulong, List<SmartFile>>();
             pathsToSearch = new List<string>();
         }
-	
-	
+
+
+
+        //Events
+        private void OnStatusChanged(string newState)
+        {
+            if (StatusChanged != null)
+            {
+                StatusChanged(newState);
+            }
+        }
+
+
 	
 	}

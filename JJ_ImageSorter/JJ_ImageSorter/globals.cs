@@ -32,45 +32,28 @@ using System.Collections;
 
     public class Tag
     {
-        private string _name;
-        private int _value;
+        private string ruleName;
+        public string RuleName { get { return ruleName; } }
 
+        private int tagValue;
+        public int TagValue { get { return tagValue; } }
 
-        //Pub Properties
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-            set
-            {
-                _name = value;
-            }
-        }
-        public int Value
-        {
-            get
-            {
-                return _value;
-            }
-            set
-            {
-                _value = value;
-            }
-        }
+        private string ruleResult;
+        public string RuleResult { get { return ruleResult; } }
+
 
         //Constructors
-        public Tag(string name, int value)
+        public Tag(string myRuleName, string myRuleResult, int value)
         {
-            _name = name;
-            _value = value;
+            ruleName = myRuleName;
+            ruleResult = myRuleResult;
+            tagValue = value;
         }
 
         //Others
         public override string ToString()
         {
-            return _name + "," + _value.ToString();
+            return ruleName + "," + ruleResult + "," + tagValue.ToString();
             //return base.ToString();
         }
     }

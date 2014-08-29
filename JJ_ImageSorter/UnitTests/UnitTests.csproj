@@ -58,7 +58,8 @@
     <Compile Include="CodedUITest1.cs" />
     <Compile Include="SmartFileTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DupFinderTests.cs" />
+    <None Include="DupFinderTests.cs" />
+    <Compile Include="AutoRankTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JJ_ImageSorter\JJ_ImageSorter.csproj">

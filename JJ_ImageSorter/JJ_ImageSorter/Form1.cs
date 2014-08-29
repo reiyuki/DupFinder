@@ -33,9 +33,9 @@ namespace JJ_ImageSorter
 
         private void btnAddPath_Click(object sender, EventArgs e)
         {
-            dup.AddSearchPath("C:\\Temp\\test");
-            PopulatePaths();
-            return;
+            //dup.AddSearchPath("C:\\Temp\\test");
+            //PopulatePaths();
+            //return;
 
 
             DialogResult d = dlgAddFolder.ShowDialog();

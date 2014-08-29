@@ -56,7 +56,11 @@
     <Compile Include="AskToOverwrite.Designer.cs">
       <DependentUpon>AskToOverwrite.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dupfinder_old.cs" />
+    <Compile Include="Autorank Classes\AutoRankRule.cs" />
+    <Compile Include="Autorank Classes\AutoRankRule_IsACopy.cs" />
+    <Compile Include="Autorank Classes\AutoRankRule_ReadableFilename.cs" />
+    <Compile Include="Autorank Classes\AutoRank.cs" />
+    <None Include="Dupfinder_old.cs" />
     <Compile Include="DupFinder.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

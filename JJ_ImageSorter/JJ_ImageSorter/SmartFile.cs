@@ -14,7 +14,7 @@ using System.IO;
         private bool _isValidFile;
         private FileInfo _fileInfo;
 
-        public List<Tag> tags;  //Tags are used to upvote/downvote a file
+        public Dictionary<string,Tag> tags;  //Tags are used to upvote/downvote a file
 
         public string value
         {
@@ -24,7 +24,18 @@ using System.IO;
             }
         }
 
-        public int TagRank { get;set;}
+        public int TagRank
+        {
+            get
+            {
+                int returnVal = 0;
+                foreach (Tag curTag in tags.Values)
+                {
+                    returnVal = returnVal + curTag.TagValue;
+                }
+                return returnVal;
+            }
+        }
 
         public long FileSize
         {
@@ -91,6 +102,22 @@ using System.IO;
                 return returnString;
             }
         }
+        public string ShortFilename
+        {
+            get
+            {
+                if (fileName.Contains("."))  //ignore extensionless filenames
+                {
+                    string shortFilename = fileName;
+                    shortFilename = shortFilename.Substring(0, shortFilename.LastIndexOf('.'));
+                    return shortFilename;
+                }
+                else
+                {
+                    return fileName;
+                }
+            }
+        }
 
 
         //Constructors
@@ -110,7 +137,8 @@ using System.IO;
 
             _isValidFile = true;
             _fileInfo = myFileInfo;
-            tags = new List<Tag>();
+            //tags = new List<Tag>();
+            tags = new Dictionary<string, Tag>();
         }
         public SmartFile(FileInfo myFileInfo)
         {
@@ -121,7 +149,8 @@ using System.IO;
 
             _isValidFile = true;
             _fileInfo = myFileInfo;
-            tags = new List<Tag>();
+            //tags = new List<Tag>();
+            tags = new Dictionary<string, Tag>();
         }
 
 
