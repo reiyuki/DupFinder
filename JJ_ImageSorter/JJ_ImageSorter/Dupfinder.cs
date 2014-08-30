@@ -130,6 +130,7 @@ public class DupFinder
         {
             //Ignore all bittorrent sync folder items
             if (curFile.Contains("\\.SyncArchive\\")) { continue;}
+            if (curFile.Contains(".SyncIgnore")) { continue; }
 
             //Generate Smartfile and do fun stuff with it
             SmartFile newSmartFile = new SmartFile(curFile);
