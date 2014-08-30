@@ -44,13 +44,24 @@ public class DupFinder
 		return pathsToSearch;
 	}
 	
-
-
-    //Events and Delegates
-    public event StateHandler StatusChanged;
-    public delegate void StateHandler(string state);
-    event FileInfoHandler DuplicateFileFound;
-    public delegate void FileInfoHandler(SmartFile smartFile);
+    //Status checking
+    private SearchState state;
+    public SearchState State
+    {
+        get
+        {
+            return state;
+        }
+        private set
+        {
+            if (state != value)
+            {
+                //change and throw event
+                OnStateChanged(value);
+                state = value;
+            }
+        }
+    }
 
 
     //Thread Stuff
@@ -60,15 +71,27 @@ public class DupFinder
     //Same as below, but through a worker thread
     public void StartSearch_Async()
     {
-        workerThread = new Thread(new ThreadStart(this.StartSearch));
-        workerThread.Start();
-        OnStatusChanged("Started Search");
+        if (workerThread == null)
+        {
+            workerThread = new Thread(new ThreadStart(this.StartSearch));
+
+            workerThread.Start();
+            OnStatusChanged("Started Search");
+        }
+        else
+        {
+            Reset();
+            StartSearch_Async();
+        }
+
     }
 
 	// Iterate through 
 	public void StartSearch()
 	{
         OnStatusChanged("Hi there");
+        State = SearchState.Discovering_Files;
+
 		//Initialize master list of files (organized by filesize)
 		fileSizeList = new Dictionary<long,List<SmartFile>>();
 		
@@ -80,22 +103,35 @@ public class DupFinder
 
 		
         //Run through list to find actual duplicates
+        State = SearchState.Comparing_Files;
+
         for ( int i = 0; i < fileSizeList.Count; i++)
         {
+            double progressPercent = (double) i / (double) fileSizeList.Count;
+            OnProgressChanged(100f * progressPercent, fileSizeList.ElementAt(i).Value[0].fileName, state); //Report Progress
 
             CompareHashesAndAddDuplicates(fileSizeList.ElementAt(i).Value);
         }
 
+        //Finish
+        State = SearchState.Idle;
+        OnProgressChanged(100, "FINISHED", state);
+        OnScanFinished();
 	}
 	
+
 	//Discover files and add to fileSizeList dictionary.   THREAD BLOCKING
 	private void DiscoverFiles(string pathName)
 	{
 		// FileInfo and parsing etc
-
+        
         string[] filenames = Directory.GetFiles(pathName, "*", SearchOption.AllDirectories);
         foreach (string curFile in filenames)
         {
+            //Ignore all bittorrent sync folder items
+            if (curFile.Contains("\\.SyncArchive\\")) { continue;}
+
+            //Generate Smartfile and do fun stuff with it
             SmartFile newSmartFile = new SmartFile(curFile);
 
             //Add the list if it dosen't exist already
@@ -107,6 +143,7 @@ public class DupFinder
 
             fileSizeList[newSmartFile.FileSize].Add(newSmartFile);
 
+            OnProgressChanged(0, filenames.Length.ToString() + " files acquired", state);
         }
 
 	}
@@ -127,6 +164,7 @@ public class DupFinder
         //
         foreach (SmartFile curFile in fileList)
         {
+
             if (tmpHashLookup.ContainsKey(curFile.hash64))
             {
                 //
@@ -140,8 +178,8 @@ public class DupFinder
         }
     }
 
-		//Attempt to add a file to our master 'duplicates' list.
-		private void TryAddDuplicate(SmartFile newFile)
+	//Attempt to add a file to our master 'duplicates' list.
+	private void TryAddDuplicate(SmartFile newFile)
 		{
 			List<SmartFile> dupeList;
 		
@@ -160,27 +198,50 @@ public class DupFinder
 			if (!dupeList.Contains(newFile))
 			{
 				dupeList.Add(newFile);
+
+                //Autotag/autorank
+                AutoRank ar = new AutoRank();
+                ar.UpdateTags(newFile);
+
+                OnDuplicateFileFound(newFile);
 			}
-		
-            //Autotag
-            AutoRank ar = new AutoRank();
-            ar.UpdateTags(newFile);
 		}
 
 
 
-        //Constructor
-        public DupFinder()
-        {
-            fileSizeList = new Dictionary<long, List<SmartFile>>();
-            duplicateFiles = new Dictionary<ulong, List<SmartFile>>();
-            pathsToSearch = new List<string>();
-        }
+    //Constructor
+    public DupFinder()
+    {
+        Reset();  //Also used to initialize
+    }
 
 
+    //Initialize/reset
+    public void Reset()
+    {
+        if (workerThread != null) { workerThread = null; }
 
-        //Events
-        private void OnStatusChanged(string newState)
+        fileSizeList = null;
+        fileSizeList = new Dictionary<long, List<SmartFile>>();
+
+        duplicateFiles = null;
+        duplicateFiles = new Dictionary<ulong, List<SmartFile>>();
+
+        pathsToSearch = null;
+        pathsToSearch = new List<string>();
+
+
+        State = SearchState.Idle;
+
+    }
+
+
+        //Events and delegates
+
+    //Status Changed (text message)
+    public event StringHandler StatusChanged;
+    public delegate void StringHandler(string myText);
+    private void OnStatusChanged(string newState)
         {
             if (StatusChanged != null)
             {
@@ -188,6 +249,52 @@ public class DupFinder
             }
         }
 
+    //State Changed
+    public event StateHandler StateChanged;
+    public delegate void StateHandler(SearchState state);
+    private void OnStateChanged(SearchState newState)
+    {
+        if (StateChanged != null)
+        {
+            StateChanged(newState);
+        }
+    }
 
+    //DuplicateFileFound
+    public event SmartFileEventHandler DuplicateFileFound;
+    public delegate void SmartFileEventHandler(SmartFile sf);
+    private void OnDuplicateFileFound(SmartFile sf)
+    {
+        if (DuplicateFileFound != null)
+        {
+            DuplicateFileFound(sf);
+        }
+    }
+
+    //Progress Changed
+    public event ProgressEventHandler ProgressChanged;
+    public delegate void ProgressEventHandler(double progressPercent, string progressDescription, SearchState state);
+    private void OnProgressChanged(double progressPercent, string progressDescription, SearchState state)
+    {
+        if (ProgressChanged != null)
+        {
+            ProgressChanged(progressPercent, progressDescription, state);
+        }
+    }
+
+    //Scan Finished
+    public event EventHandler ScanFinished;
+    private void OnScanFinished()
+    {
+        if (ScanFinished != null)
+        {
+            ScanFinished(this,null);
+        }
+    }
+
+    
+
+    //Local Enum for Search State
+    public enum SearchState {Unknown = 0, Idle = 1, Discovering_Files = 2, Comparing_Files= 3, Error = 4};
 	
-	}
+}

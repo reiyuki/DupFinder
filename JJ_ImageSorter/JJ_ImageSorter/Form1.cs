@@ -9,11 +9,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using JJ_ImageSorter;
 
+
 namespace JJ_ImageSorter
 {
     public partial class Form1 : Form
     {
         public DupFinder dup;
+
 
         public Form1()
         {
@@ -23,13 +25,58 @@ namespace JJ_ImageSorter
              //dup.DuplicateFileFound += DuplicateFileFound;
             //textBox1.DataBindings.Add("Text", dup, "CurrentStatus", false, DataSourceUpdateMode.OnPropertyChanged);
 
-            //dup.StatusChanged += dupStatusChanged;
+            
+            //Events, yay.
+            dup.StateChanged += dupStateChanged;
+            dup.ProgressChanged += ProgressChanged;
+            dup.ScanFinished += dupScanFinished;
+
         }
 
-        private void dupStatusChanged(string message)
+        private void dupScanFinished(object sender, EventArgs e)
         {
-            txtStatusBar.Text = message;
+            //this.Invoke(PopulateDupList);
+            if(InvokeRequired)
+            {
+                EventHandler newE = new EventHandler(dupScanFinished);
+                this.Invoke(newE, sender, e);
+            }
+            else
+            {
+                PopulateDupList();
+            }
+            
+            
         }
+
+        private void dupStateChanged(DupFinder.SearchState newState)
+        {
+            if (InvokeRequired)  //Invoke in case thread workers working
+            {
+                DupFinder.StateHandler st = new DupFinder.StateHandler(dupStateChanged);
+                this.Invoke(st, newState);
+            }
+            else
+            {
+                lblSearchState.Text = ((DupFinder.SearchState)newState).ToString();
+            }
+        }
+
+        private void ProgressChanged(double progressPercent, string progressDescription, DupFinder.SearchState state)
+        {
+            if (InvokeRequired)
+            {
+                DupFinder.ProgressEventHandler pe = new DupFinder.ProgressEventHandler(ProgressChanged);
+                this.Invoke(pe,progressPercent,progressDescription,state);
+            }
+            else
+            {
+                txtStatusBar.Text = progressDescription;
+                progressBar1.Value = (int)progressPercent;
+            }
+
+        }
+
 
         private void btnAddPath_Click(object sender, EventArgs e)
         {
@@ -62,15 +109,16 @@ namespace JJ_ImageSorter
 
         private void PopulateDupList()
         {
+            Dictionary<ulong, List<SmartFile>> duplicateFiles = dup.DuplicateFiles;  //grab ref
 
             //Clear treeview
             treeView1.Nodes.Clear();
 
             //Each set of duplicates
-            for (int curPos = 0; curPos <= dup.DuplicateFiles.Count - 1; curPos++)
+            for (int curPos = 0; curPos <= duplicateFiles.Count - 1; curPos++)
             {
                 //get curDupe  (0)
-                List<SmartFile> curDupe = dup.DuplicateFiles.ElementAt(curPos).Value;
+                List<SmartFile> curDupe = duplicateFiles.ElementAt(curPos).Value;
 
                 TreeNode newNode = new TreeNode(curDupe[0].fullFileName + "      (" + curDupe[0].TagRank  + ")");
                 newNode.Tag = curDupe[0];
@@ -91,7 +139,7 @@ namespace JJ_ImageSorter
 
             //Test do stuff
             TreeNode n = new TreeNode();
-            n.Tag = dup.DuplicateFiles.ElementAt(0).Value[0]; // no way!!
+            n.Tag = duplicateFiles.ElementAt(0).Value[0]; // no way!!  This actually works.
 
 
         }
@@ -107,9 +155,9 @@ namespace JJ_ImageSorter
 
         private void btnStartSearch_Click(object sender, EventArgs e)
         {
-            dup.StartSearch();
-            //this.Text = dup.Status;
-            PopulateDupList();
+            //dup.StartSearch();
+            dup.StartSearch_Async();
+            //PopulateDupList();
         }
 
 
@@ -187,5 +235,35 @@ namespace JJ_ImageSorter
 
 
         }
+
+        
+
+
+
     }
+
+
+
+    public static class ControlExtentions
+    {
+        public delegate void InvokeHandler();
+
+        public static void SafeInvoke(this Control control, InvokeHandler handler)
+        {
+            if (control.InvokeRequired)
+            {
+                control.Invoke(handler);
+            }
+            else
+            {
+                handler();
+            }
+
+        }
+
+
+    }
+
+
+
 }

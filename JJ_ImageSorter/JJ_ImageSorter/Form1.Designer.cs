@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup5 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
             this.btnAddPath = new System.Windows.Forms.Button();
             this.lstSearchPaths = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -42,6 +42,8 @@
             this.toolStripUnexpandAllItems = new System.Windows.Forms.ToolStripMenuItem();
             this.cmdDeleteCheckedFiles = new System.Windows.Forms.Button();
             this.dlgAddFolder = new System.Windows.Forms.FolderBrowserDialog();
+            this.lblSearchState = new System.Windows.Forms.Label();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.context_ExpandItems.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,14 +59,16 @@
             // 
             // lstSearchPaths
             // 
+            this.lstSearchPaths.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lstSearchPaths.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1});
             this.lstSearchPaths.FullRowSelect = true;
             this.lstSearchPaths.GridLines = true;
-            listViewGroup1.Header = "ListViewGroup";
-            listViewGroup1.Name = "listViewGroup1";
+            listViewGroup5.Header = "ListViewGroup";
+            listViewGroup5.Name = "listViewGroup1";
             this.lstSearchPaths.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup1});
+            listViewGroup5});
             this.lstSearchPaths.Location = new System.Drawing.Point(12, 35);
             this.lstSearchPaths.MultiSelect = false;
             this.lstSearchPaths.Name = "lstSearchPaths";
@@ -79,6 +83,8 @@
             // 
             // txtStatusBar
             // 
+            this.txtStatusBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtStatusBar.Location = new System.Drawing.Point(12, 308);
             this.txtStatusBar.Name = "txtStatusBar";
             this.txtStatusBar.ReadOnly = true;
@@ -87,6 +93,9 @@
             // 
             // treeView1
             // 
+            this.treeView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.treeView1.CheckBoxes = true;
             this.treeView1.Location = new System.Drawing.Point(12, 128);
             this.treeView1.Name = "treeView1";
@@ -137,6 +146,7 @@
             // 
             // cmdDeleteCheckedFiles
             // 
+            this.cmdDeleteCheckedFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdDeleteCheckedFiles.Location = new System.Drawing.Point(332, 98);
             this.cmdDeleteCheckedFiles.Name = "cmdDeleteCheckedFiles";
             this.cmdDeleteCheckedFiles.Size = new System.Drawing.Size(126, 24);
@@ -145,11 +155,33 @@
             this.cmdDeleteCheckedFiles.UseVisualStyleBackColor = true;
             this.cmdDeleteCheckedFiles.Click += new System.EventHandler(this.cmdDeleteCheckedFiles_Click);
             // 
+            // lblSearchState
+            // 
+            this.lblSearchState.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblSearchState.AutoSize = true;
+            this.lblSearchState.Location = new System.Drawing.Point(195, 292);
+            this.lblSearchState.Name = "lblSearchState";
+            this.lblSearchState.Size = new System.Drawing.Size(62, 13);
+            this.lblSearchState.TabIndex = 8;
+            this.lblSearchState.Text = "searchstate";
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBar1.Location = new System.Drawing.Point(12, 334);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(446, 24);
+            this.progressBar1.TabIndex = 9;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(470, 341);
+            this.ClientSize = new System.Drawing.Size(470, 375);
+            this.Controls.Add(this.lblSearchState);
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.cmdDeleteCheckedFiles);
             this.Controls.Add(this.btnStartSearch);
             this.Controls.Add(this.btnDeletePath);
@@ -157,6 +189,7 @@
             this.Controls.Add(this.txtStatusBar);
             this.Controls.Add(this.lstSearchPaths);
             this.Controls.Add(this.btnAddPath);
+            this.MinimumSize = new System.Drawing.Size(440, 400);
             this.Name = "Form1";
             this.Text = "Form1";
             this.context_ExpandItems.ResumeLayout(false);
@@ -179,6 +212,8 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripUnexpandAllItems;
         private System.Windows.Forms.Button cmdDeleteCheckedFiles;
         private System.Windows.Forms.FolderBrowserDialog dlgAddFolder;
+        private System.Windows.Forms.Label lblSearchState;
+        private System.Windows.Forms.ProgressBar progressBar1;
 
     }
 }

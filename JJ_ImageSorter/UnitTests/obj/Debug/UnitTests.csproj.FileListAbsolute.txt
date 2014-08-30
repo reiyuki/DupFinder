@@ -5,10 +5,10 @@ C:\Users\Reiyuki\Documents\Visual Studio 2012\Projects\JJ_ImageSorter\UnitTests\
 C:\Users\Reiyuki\Documents\Visual Studio 2012\Projects\JJ_ImageSorter\UnitTests\bin\Debug\JJ_ImageSorter.exe
 C:\Users\Reiyuki\Documents\Visual Studio 2012\Projects\JJ_ImageSorter\UnitTests\bin\Debug\JJ_ImageSorter.pdb
 C:\Users\Reiyuki\Documents\Visual Studio 2012\Projects\JJ_ImageSorter\UnitTests\obj\Debug\UnitTests.csprojResolveAssemblyReference.cache
-C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\UnitTests\obj\Debug\UnitTests.csprojResolveAssemblyReference.cache
 C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\UnitTests\bin\Debug\UnitTests.dll
 C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\UnitTests\bin\Debug\UnitTests.pdb
 C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\UnitTests\bin\Debug\JJ_ImageSorter.exe
 C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\UnitTests\bin\Debug\JJ_ImageSorter.pdb
+C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\UnitTests\obj\Debug\UnitTests.csprojResolveAssemblyReference.cache
 C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\UnitTests\obj\Debug\UnitTests.dll
 C:\Users\Reiyuki\Documents\GitHub\DupFinder\JJ_ImageSorter\UnitTests\obj\Debug\UnitTests.pdb
