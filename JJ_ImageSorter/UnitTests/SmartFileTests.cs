@@ -47,7 +47,16 @@ using System.Diagnostics;
         }
 
 
-        
+        [TestMethod]
+        public void MoreTests()
+        {
+            SmartFile sf = new SmartFile("C:\\inc\\0914\\34\\1408837834350.jpg");
+
+            Debug.WriteLine(sf.LastFolderName);
+
+        }
+
+
 
     }
 

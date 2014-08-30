@@ -119,6 +119,28 @@ using System.IO;
             }
         }
 
+        //Get the final folder item in the hierarchy
+        public string LastFolderName
+        {
+            get
+            {
+            string returnName = "";
+
+            string[] elements = fullFileName.Split(Convert.ToChar("\\"));
+
+            returnName = elements[elements.Length - 2];  //return last foldername
+            return returnName;
+            }
+        }
+
+        public string[] GetFolderTree //Add later
+        {
+            get
+            {
+                return null;
+            }
+        }
+
 
         //Constructors
         public SmartFile(string fullFilename)
