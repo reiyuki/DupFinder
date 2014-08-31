@@ -81,6 +81,11 @@ namespace JJ_ImageSorter
             for (int x = 0; x < filesToDelete.Count; x++)
             {
                 System.Diagnostics.Debug.WriteLine("DELETEING:" + filesToDelete[x].fullFileName);
+                
+                //NEW METHOD
+                filesToDelete[x].Delete();
+                
+
                 //Application.DoEvents();
                 UpdateDeleteProgress(filesDeleted, totalFilesToDelete);
                 //System.Threading.Thread.Sleep(1000);

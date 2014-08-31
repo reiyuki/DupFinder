@@ -94,11 +94,12 @@ public class DupFinder
 
 		//Initialize master list of files (organized by filesize)
 		fileSizeList = new Dictionary<long,List<SmartFile>>();
-		
+
 		//Discover files in each path (adds to master list fileSizeList)
 		foreach (string curSearchPath in pathsToSearch)
 		{
 			DiscoverFiles(curSearchPath);
+            
 		}
 
 		
@@ -126,6 +127,10 @@ public class DupFinder
 		// FileInfo and parsing etc
         
         string[] filenames = Directory.GetFiles(pathName, "*", SearchOption.AllDirectories);
+        
+        OnProgressChanged(0, filenames.Length.ToString() + " files acquired", state);
+        int numFiles = filenames.Length; int curFileNum = 0; //statistics
+
         foreach (string curFile in filenames)
         {
             //Ignore all bittorrent sync folder items
@@ -144,7 +149,7 @@ public class DupFinder
 
             fileSizeList[newSmartFile.FileSize].Add(newSmartFile);
 
-            OnProgressChanged(0, filenames.Length.ToString() + " files acquired", state);
+            OnProgressChanged((double)((double)curFileNum / (double)numFiles)*100f, curFileNum.ToString() + " files processed", state); curFileNum++;
         }
 
 	}
@@ -236,8 +241,25 @@ public class DupFinder
 
     }
 
+    public void DeleteFile(SmartFile sf)
+    {
+        if (sf == null) { return; }
 
+        //Find in duplicate lists
+        if (duplicateFiles[sf.hash64].Exists((SmartFile sf2) => sf2.fullFileName == sf.fullFileName))
+        {
+            duplicateFiles[sf.hash64].Find((SmartFile sf2) => sf2.fullFileName == sf.fullFileName).Delete();
+            duplicateFiles[sf.hash64].Remove(sf);
+            OnFileDeleted(sf);
+        }
+        
+
+    }
+
+
+    //      
         //Events and delegates
+    //  
 
     //Status Changed (text message)
     public event StringHandler StatusChanged;
@@ -293,7 +315,17 @@ public class DupFinder
         }
     }
 
-    
+    //Deleted a file
+    public event SmartFileEventHandler FileDeleted;
+    private void OnFileDeleted(SmartFile sf)
+    {
+        if (FileDeleted != null)
+        {
+            FileDeleted(sf);
+        }
+    }
+
+
 
     //Local Enum for Search State
     public enum SearchState {Unknown = 0, Idle = 1, Discovering_Files = 2, Comparing_Files= 3, Error = 4};

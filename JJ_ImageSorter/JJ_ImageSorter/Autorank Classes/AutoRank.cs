@@ -23,6 +23,7 @@ public class AutoRank
         //Add all our rulesets
         rules.Add(new AutoRankRule_FilenameReadability());
         rules.Add(new AutoRankRule_IsACopy());
+        rules.Add(new AutoRankRule_Folders());
     }
 
     

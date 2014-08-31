@@ -198,7 +198,10 @@ using System.IO;
         }
 
 
-
+        public void Delete()
+        {
+            _fileInfo.Delete();
+        }
 
         public bool IsIdenticalTo(SmartFile otherFile)
         {
