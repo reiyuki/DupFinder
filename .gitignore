@@ -224,3 +224,4 @@ config
 *.dll
 JJ_ImageSorter/UnitTests/bin/Debug/JJ_ImageSorter.pdb
 JJ_ImageSorter/UnitTests/bin/Debug/UnitTests.dll
+JJ_ImageSorter/JJ_ImageSorter.v11.suo
