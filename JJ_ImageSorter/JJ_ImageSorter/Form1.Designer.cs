@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewGroup listViewGroup5 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
             this.btnAddPath = new System.Windows.Forms.Button();
             this.lstSearchPaths = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -38,12 +38,20 @@
             this.btnDeletePath = new System.Windows.Forms.Button();
             this.btnStartSearch = new System.Windows.Forms.Button();
             this.context_ExpandItems = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripExpandMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripExpandAllItems = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripUnexpandAllItems = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripUnExpandAllItems = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripTagFileWildcard = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripAddFolderTagWildcard = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripCutAllInFolder = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripPasteItems = new System.Windows.Forms.ToolStripMenuItem();
             this.cmdDeleteCheckedFiles = new System.Windows.Forms.Button();
             this.dlgAddFolder = new System.Windows.Forms.FolderBrowserDialog();
             this.lblSearchState = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.btnAutoCheck = new System.Windows.Forms.Button();
             this.context_ExpandItems.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -65,10 +73,10 @@
             this.columnHeader1});
             this.lstSearchPaths.FullRowSelect = true;
             this.lstSearchPaths.GridLines = true;
-            listViewGroup5.Header = "ListViewGroup";
-            listViewGroup5.Name = "listViewGroup1";
+            listViewGroup3.Header = "ListViewGroup";
+            listViewGroup3.Name = "listViewGroup1";
             this.lstSearchPaths.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup5});
+            listViewGroup3});
             this.lstSearchPaths.Location = new System.Drawing.Point(12, 35);
             this.lstSearchPaths.MultiSelect = false;
             this.lstSearchPaths.Name = "lstSearchPaths";
@@ -126,23 +134,76 @@
             // context_ExpandItems
             // 
             this.context_ExpandItems.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripExpandAllItems,
-            this.toolStripUnexpandAllItems});
+            this.toolStripExpandMenu,
+            this.toolStripSeparator1,
+            this.toolStripTagFileWildcard,
+            this.toolStripAddFolderTagWildcard,
+            this.toolStripSeparator2,
+            this.toolStripCutAllInFolder,
+            this.toolStripPasteItems});
             this.context_ExpandItems.Name = "context_ExpandItems";
-            this.context_ExpandItems.Size = new System.Drawing.Size(177, 48);
+            this.context_ExpandItems.Size = new System.Drawing.Size(206, 126);
+            this.context_ExpandItems.Opening += new System.ComponentModel.CancelEventHandler(this.context_ExpandItems_Opening);
             this.context_ExpandItems.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.context_ExpandItems_ItemClicked);
+            // 
+            // toolStripExpandMenu
+            // 
+            this.toolStripExpandMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripExpandAllItems,
+            this.toolStripUnExpandAllItems});
+            this.toolStripExpandMenu.Name = "toolStripExpandMenu";
+            this.toolStripExpandMenu.Size = new System.Drawing.Size(205, 22);
+            this.toolStripExpandMenu.Text = "(Un)Expand Items";
             // 
             // toolStripExpandAllItems
             // 
             this.toolStripExpandAllItems.Name = "toolStripExpandAllItems";
             this.toolStripExpandAllItems.Size = new System.Drawing.Size(176, 22);
             this.toolStripExpandAllItems.Text = "Expand All Items";
+            this.toolStripExpandAllItems.Click += new System.EventHandler(this.toolStripExpandAllItems_Click);
             // 
-            // toolStripUnexpandAllItems
+            // toolStripUnExpandAllItems
             // 
-            this.toolStripUnexpandAllItems.Name = "toolStripUnexpandAllItems";
-            this.toolStripUnexpandAllItems.Size = new System.Drawing.Size(176, 22);
-            this.toolStripUnexpandAllItems.Text = "UnExpand All Items";
+            this.toolStripUnExpandAllItems.Name = "toolStripUnExpandAllItems";
+            this.toolStripUnExpandAllItems.Size = new System.Drawing.Size(176, 22);
+            this.toolStripUnExpandAllItems.Text = "UnExpand All Items";
+            this.toolStripUnExpandAllItems.Click += new System.EventHandler(this.toolStripUnExpandAllItems_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(202, 6);
+            // 
+            // toolStripTagFileWildcard
+            // 
+            this.toolStripTagFileWildcard.Name = "toolStripTagFileWildcard";
+            this.toolStripTagFileWildcard.Size = new System.Drawing.Size(205, 22);
+            this.toolStripTagFileWildcard.Text = "Add File Tag Wildcard";
+            // 
+            // toolStripAddFolderTagWildcard
+            // 
+            this.toolStripAddFolderTagWildcard.Name = "toolStripAddFolderTagWildcard";
+            this.toolStripAddFolderTagWildcard.Size = new System.Drawing.Size(205, 22);
+            this.toolStripAddFolderTagWildcard.Text = "Add Folder Tag Wildcard";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(202, 6);
+            // 
+            // toolStripCutAllInFolder
+            // 
+            this.toolStripCutAllInFolder.Name = "toolStripCutAllInFolder";
+            this.toolStripCutAllInFolder.Size = new System.Drawing.Size(205, 22);
+            this.toolStripCutAllInFolder.Text = "Cut all items in folder";
+            this.toolStripCutAllInFolder.Click += new System.EventHandler(this.toolStripCutAllInFolder_Click);
+            // 
+            // toolStripPasteItems
+            // 
+            this.toolStripPasteItems.Name = "toolStripPasteItems";
+            this.toolStripPasteItems.Size = new System.Drawing.Size(205, 22);
+            this.toolStripPasteItems.Text = "Paste to folder";
+            this.toolStripPasteItems.Click += new System.EventHandler(this.toolStripPasteItems_Click);
             // 
             // cmdDeleteCheckedFiles
             // 
@@ -175,11 +236,22 @@
             this.progressBar1.Size = new System.Drawing.Size(446, 24);
             this.progressBar1.TabIndex = 9;
             // 
+            // btnAutoCheck
+            // 
+            this.btnAutoCheck.Location = new System.Drawing.Point(213, 98);
+            this.btnAutoCheck.Name = "btnAutoCheck";
+            this.btnAutoCheck.Size = new System.Drawing.Size(95, 24);
+            this.btnAutoCheck.TabIndex = 10;
+            this.btnAutoCheck.Text = "AutoCheck Files";
+            this.btnAutoCheck.UseVisualStyleBackColor = true;
+            this.btnAutoCheck.Click += new System.EventHandler(this.btnAutoCheck_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(470, 375);
+            this.Controls.Add(this.btnAutoCheck);
             this.Controls.Add(this.lblSearchState);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.cmdDeleteCheckedFiles);
@@ -192,6 +264,7 @@
             this.MinimumSize = new System.Drawing.Size(440, 400);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.context_ExpandItems.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -208,12 +281,20 @@
         private System.Windows.Forms.Button btnDeletePath;
         private System.Windows.Forms.Button btnStartSearch;
         private System.Windows.Forms.ContextMenuStrip context_ExpandItems;
-        private System.Windows.Forms.ToolStripMenuItem toolStripExpandAllItems;
-        private System.Windows.Forms.ToolStripMenuItem toolStripUnexpandAllItems;
+        private System.Windows.Forms.ToolStripMenuItem toolStripExpandMenu;
         private System.Windows.Forms.Button cmdDeleteCheckedFiles;
         private System.Windows.Forms.FolderBrowserDialog dlgAddFolder;
         private System.Windows.Forms.Label lblSearchState;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripExpandAllItems;
+        private System.Windows.Forms.ToolStripMenuItem toolStripUnExpandAllItems;
+        private System.Windows.Forms.ToolStripMenuItem toolStripTagFileWildcard;
+        private System.Windows.Forms.ToolStripMenuItem toolStripAddFolderTagWildcard;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem toolStripCutAllInFolder;
+        private System.Windows.Forms.ToolStripMenuItem toolStripPasteItems;
+        private System.Windows.Forms.Button btnAutoCheck;
 
     }
 }

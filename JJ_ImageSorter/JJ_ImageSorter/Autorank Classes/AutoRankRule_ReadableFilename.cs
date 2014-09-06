@@ -12,7 +12,7 @@ public class AutoRankRule_FilenameReadability : AutoRankRule
     public override string RuleDescription { get { return "Not finished.  Rank items up/down depending on how readable the filename is."; } }
 
     //tweakables
-    private static int legibleFilenameModifier = 2;
+    //private static int legibleFilenameModifier = 2;   //TODO, maybe later
     private static int probablyLegibleFilenameModifier = 1;
     private static int unknownFilenameModifier = 0;
     private static int unreadableFilenameModifier = -2;     //No alphabet characters

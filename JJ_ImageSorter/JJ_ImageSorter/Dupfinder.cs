@@ -37,9 +37,14 @@ public class DupFinder
         //Remove any trailing \'es
         if (oldSearchPath.EndsWith("\\")) { oldSearchPath = oldSearchPath.TrimEnd("\\".ToCharArray()); }
 
-		pathsToSearch.Remove(oldSearchPath);
+        //TODO needs a sanity check
+        if (pathsToSearch.Contains(oldSearchPath))
+        {
+		    pathsToSearch.Remove(oldSearchPath);
+        }
 	}	
-	public List<string> GetSearchPaths()
+
+    public List<string> GetSearchPaths()
 	{
 		return pathsToSearch;
 	}
@@ -125,7 +130,6 @@ public class DupFinder
 	private void DiscoverFiles(string pathName)
 	{
 		// FileInfo and parsing etc
-        
         string[] filenames = Directory.GetFiles(pathName, "*", SearchOption.AllDirectories);
         
         OnProgressChanged(0, filenames.Length.ToString() + " files acquired", state);

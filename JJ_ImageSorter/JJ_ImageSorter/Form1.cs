@@ -30,7 +30,7 @@ namespace JJ_ImageSorter
             dup.StateChanged += dupStateChanged;
             dup.ProgressChanged += ProgressChanged;
             dup.ScanFinished += dupScanFinished;
-
+            dup.FileDeleted += DupFileDeleted;
         }
 
         private void dupScanFinished(object sender, EventArgs e)
@@ -46,6 +46,12 @@ namespace JJ_ImageSorter
                 PopulateDupList();
             }
             
+            
+        }
+
+        private void DupFileDeleted(SmartFile sf)
+        {
+            //find file in list
             
         }
 
@@ -193,8 +199,11 @@ namespace JJ_ImageSorter
 
         private void btnDeletePath_Click(object sender, EventArgs e)
         {
-            dup.DelSearchPath(lstSearchPaths.SelectedItems[0].Text);
-            PopulatePaths();
+            if (lstSearchPaths.SelectedItems.Count > 0)
+            {
+                dup.DelSearchPath(lstSearchPaths.SelectedItems[0].Text);
+                PopulatePaths();
+            }
         }
 
         private void cmdDeleteCheckedFiles_Click(object sender, EventArgs e)
@@ -235,6 +244,92 @@ namespace JJ_ImageSorter
 
 
         }
+
+        private void context_ExpandItems_Opening(object sender, CancelEventArgs e)
+        {
+
+        }
+
+
+        //  Cut+Paste
+        private void toolStripCutAllInFolder_Click(object sender, EventArgs e)
+        {
+            //
+            DataObject data = new DataObject();
+            SmartFile selectedFile = (SmartFile) treeView1.SelectedNode.Tag;
+
+            string[] files = System.IO.Directory.GetFiles(selectedFile.FullFolderName);
+
+            data.SetData("FileDrop", files);
+            data.SetData("Preferred DropEffect", DragDropEffects.Move);
+
+            Clipboard.Clear();
+            Clipboard.SetDataObject(data,true);
+
+
+        }
+
+        private void toolStripPasteItems_Click(object sender, EventArgs e)
+        {
+            if (Clipboard.GetData("FileDrop") == null) { return;}
+            //
+            TreeNode selectedNode = treeView1.SelectedNode;
+            if (selectedNode != null)
+            {
+                SmartFile file = (SmartFile) selectedNode.Tag;
+                string fullPath = file.FullFolderName;
+                
+                string[] files = (string[]) Clipboard.GetData("FileDrop");
+                
+                foreach (string curFile in files)
+                {
+                    SmartFile s = new SmartFile(curFile);
+                    if (s.isValidFile)
+                    {
+                        s.Move(fullPath);
+                    }
+                    //System.IO.Directory.Move(curFile,fullPath
+                }
+
+                PopulateDupList();
+            }
+
+        }
+
+
+        //Autocheck based on ranking
+        private void btnAutoCheck_Click(object sender, EventArgs e)
+        {
+            //only check files with different rankings
+            foreach (TreeNode curNode in treeView1.Nodes)
+            {
+                TreeNode keeperNode = curNode;
+
+                
+                //get children nodes as well
+
+
+                //Check all that aren't keepers
+
+            }
+        }
+
+
+        private void toolStripExpandAllItems_Click(object sender, EventArgs e)
+        {
+            treeView1.ExpandAll();
+        }
+
+        private void toolStripUnExpandAllItems_Click(object sender, EventArgs e)
+        {
+            treeView1.CollapseAll();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
 
         
 

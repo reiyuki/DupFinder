@@ -133,6 +133,18 @@ using System.IO;
             }
         }
 
+        public string FullFolderName  //Everything up to the last backslash
+        {
+            get
+            {
+                string returnName = "";
+                string[] elements = fullFileName.Split(Convert.ToChar("\\"));                
+                int lastPathPos = fullFileName.LastIndexOf(Convert.ToChar("\\"));
+                return fullFileName.Substring(0,lastPathPos);
+            }
+        }
+
+
         public string[] GetFolderTree //Add later
         {
             get
@@ -141,6 +153,10 @@ using System.IO;
             }
         }
 
+        public void Move(string destFolder)
+        {
+            fileInfo.MoveTo(destFolder + "\\" + ShortFilename);
+        }
 
         //Constructors
         public SmartFile(string fullFilename)

@@ -23,7 +23,7 @@ public class AutoRankRule_IsACopy : AutoRankRule
             return;
         }
 
-
+        sf.tags[RuleName] = new Tag(RuleResult, "not a copy", modifier_NotACopy);
         return;
 
 
